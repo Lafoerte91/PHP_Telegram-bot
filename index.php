@@ -252,7 +252,6 @@ function writeLogFile($string, $clear=false) {
 $data = file_get_contents('php://input'); // получение данных
 $data = json_decode($data, true); // преобразование в массив
 writeLogFile($data, true); // запись в файл
-echo file_get_contents('message.txt'); // вывод содержимого файла
 
 
 
