@@ -206,24 +206,55 @@ define('TG_USER_ID', "520961798"); // ID чата
 // $res = curl_exec($ch); // выполнение запроса
 // curl_close($ch); // закрытие запроса
 
-// // отправка нескольких документов
-$arrayQuery = [
-  "chat_id" => TG_USER_ID,
-  "media" => json_encode([
-    ['type' => 'document', 'media' => 'attach://cat'], 
-    ['type' => 'document', 'media' => 'attach://cat_2']
-  ]),
-  'cat' => new CURLFile(__DIR__ . '/cat.jpg'),
-  'cat_2' => new CURLFile(__DIR__ . '/cat2.jpg'),
-]; // запрос
-$ch = curl_init('https://api.telegram.org/bot' . TG_TOKEN . '/sendMediaGroup'); // инициализация
-curl_setopt($ch, CURLOPT_POST, 1); // тип запроса
-curl_setopt($ch, CURLOPT_POSTFIELDS, $arrayQuery); // данные запроса
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // вывод результата в буфер
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // не проверять SSL сертификат
-curl_setopt($ch, CURLOPT_HEADER, false); // не выводить заголовки
-$res = curl_exec($ch); // выполнение запроса
-curl_close($ch); // закрытие запроса
+// отправка нескольких документов
+// $arrayQuery = [
+//   "chat_id" => TG_USER_ID,
+//   "media" => json_encode([
+//     ['type' => 'document', 'media' => 'attach://cat'], 
+//     ['type' => 'document', 'media' => 'attach://cat_2']
+//   ]),
+//   'cat' => new CURLFile(__DIR__ . '/cat.jpg'),
+//   'cat_2' => new CURLFile(__DIR__ . '/cat2.jpg'),
+// ]; // запрос
+// $ch = curl_init('https://api.telegram.org/bot' . TG_TOKEN . '/sendMediaGroup'); // инициализация
+// curl_setopt($ch, CURLOPT_POST, 1); // тип запроса
+// curl_setopt($ch, CURLOPT_POSTFIELDS, $arrayQuery); // данные запроса
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // вывод результата в буфер
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // не проверять SSL сертификат
+// curl_setopt($ch, CURLOPT_HEADER, false); // не выводить заголовки
+// $res = curl_exec($ch); // выполнение запроса
+// curl_close($ch); // закрытие запроса
+
+// вызов Webhook
+// $getQuery = [
+//   "url" => "https://test.bots-time.ru/index.php"
+// ]; // запрос
+// $ch = curl_init('https://api.telegram.org/bot' . TG_TOKEN . '/setWebhook?' . http_build_query($getQuery)); // инициализация
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // вывод результата в буфер
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // не проверять SSL сертификат
+// curl_setopt($ch, CURLOPT_HEADER, false); // не выводить заголовки
+// $resultQuery = curl_exec($ch); // выполнение запроса
+// curl_close($ch); // закрытие запроса
+// echo $resultQuery;
+
+// запись в файл
+function writeLogFile($string, $clear=false) {
+  $log_file_name = 'message.txt'; // имя файла
+  if($clear == false) {
+    $now = date("Y-m-d H:i:s"); // текущая дата
+    file_put_contents($log_file_name, $now . ' ' . print_r($string, true) . "\r\n", FILE_APPEND); // запись в файл
+  } else {
+    $now = date("Y-m-d H:i:s"); // текущая дата
+    file_put_contents($log_file_name, " "); // запись в файл
+    file_put_contents($log_file_name, $now . ' ' . print_r($string, true) . "\r\n", FILE_APPEND); // запись в файл
+  }
+}
+$data = file_get_contents('php://input'); // получение данных
+$data = json_decode($data, true); // преобразование в массив
+writeLogFile($data, true); // запись в файл
+echo file_get_contents('message.txt'); // вывод содержимого файла
+
+
 
 
 
