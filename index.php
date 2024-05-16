@@ -4,7 +4,7 @@ ini_set('error_reporting', E_ALL); // вывод ошибок
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-define('TG_TOKEN', "7004397176:AAFKCpUtJ-Wm8WO9JgsBFET2NHmCtIqIaS4"); // Токен бота
+define('TG_TOKEN', "YOUR_TOKEN"); // Токен бота
 define('TG_USER_ID', "520961798"); // ID чата
 
 // Текстовое сообщение
